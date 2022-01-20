@@ -1,0 +1,205 @@
+#!/bin/bash
+
+clear
+
+## main menu func - read, case, while loop
+menu () { while true
+do
+
+tput setaf 51;
+echo ""
+echo "                              ~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~"
+echo "                                  ~:Django Basic Commands:~"
+echo ""
+echo "   C: Make directory | L: List directory && files | V: Create venv/virtual environment"
+echo "   0: Start project | 1: runserver | 2: make migrations | 3: migrate | 4: Create app"
+echo "   5: Create super-user | 6: Django version | 7: Deprecation Warnings | 8: Upgrade"
+echo "   9: Change username password | 10: Python shell | 11: collectstatic | 12: sqlmigrate"
+echo "   "
+echo ""
+echo "                                    X: X or x to Exit/Quit"
+echo "                              ~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~"
+echo ""
+read -p " Please enter the number: " number
+case $number in
+    c|C) createDirectory;;
+    v|V) createVenv;;
+    l|L) list;;
+    0) installDjango;;
+    1) runserver;;
+    2) makeMigrations;;
+    3) migrate;;
+    4) createApp;;
+    5) createSuperUser;;
+    6) djangoVersion;;
+    7) deprecationWarnings;;
+    8) upgrade;;
+    9) changePasswordUsername;;
+    10) python3shell;;
+    11) collectStatic;;
+    12) sqlMigrate;;
+    x|X) exit;;
+
+esac
+done
+}
+
+
+
+##createDirectory
+createDirectory() {
+    tput setaf 3;
+    echo ""
+    echo -n $folder " Make directory : "
+    read folder
+    whoami=$(whoami)
+    sudo mkdir $folder && sudo chown -R "$(whoami)":"$(whoami)" $folder
+    echo ""
+    echo " Directory $folder was created!!!"
+    cd $folder
+    echo ""
+    pwd
+}
+
+##Create venv
+createVenv() {
+    echo ""
+    tput setaf 3;
+    echo ""
+    echo -n $venv " Name of your venv: "
+    read venv
+    sudo python3 -m venv $venv
+    echo ""
+    echo " Virtual environment was created!!!"
+}
+
+## list dir & files
+list() {
+    echo ""
+    tput setaf 3;
+    ls -la
+}
+
+##installDjango
+installDjango() {
+    echo ""
+    tput setaf 3;
+    echo -n " Start project : "
+    # shellcheck disable=SC2162
+    read app
+    tput setaf 3;
+    django-admin startproject $app .
+    tput setaf 3;
+    echo ""
+    echo " Django new project was created!!!"
+}
+
+##runserver
+runserver() {
+    tput setaf 3;
+    python3 manage.py runserver
+}
+
+##make migrations
+makeMigrations() {
+    echo ""
+    tput setaf 3;
+    echo -n " Optional commands : "
+    read command
+    python3 manage.py makemigrations $command
+
+}
+
+##migrate
+migrate() {
+    echo ""
+    tput setaf 3;
+    echo -n " Optional commands : "
+    read command
+    python3 manage.py migrate $command
+
+
+}
+
+##create app
+createApp() {
+    echo ""
+    tput setaf 3;
+    echo -n " Choose the name of your new app : "
+    # shellcheck disable=SC2162
+    read app
+    django-admin startapp $app
+    echo ""
+    tput setaf 213;
+    echo " App was created with success!!!"
+
+
+}
+
+##createSuperUser
+createSuperUser() {
+    echo ""
+    tput setaf 3;
+    python3 manage.py createsuperuser
+}
+
+##djangoVersio
+djangoVersion() {
+    echo ""
+    tput setaf 3;
+    echo " Current version is: "
+    python3 -m django --version
+}
+
+##deprecationWarnings
+deprecationWarnings() {
+    echo ""
+    tput setaf 3;
+    python3 -Wa manage.py test
+}
+
+##upgrade
+upgrade() {
+    echo ""
+    tput setaf 3;
+    echo -n upg " Upgrade your Django project to the version: "
+    # shellcheck disable=SC2162
+    read upg
+    pip install --upgrade django==$upg
+    echo ""
+    echo " Django was upgrated with success!!! "
+}
+
+##changePasswordUsername
+changePasswordUsername() {
+    echo ""
+    tput setaf 3;
+    python3 manage.py changepassword username
+}
+
+##python3shell
+python3shell() {
+    echo ""
+    tput setaf 3;
+    python3 manage.py shell
+}
+
+##collectStatic
+collectStatic() {
+    echo ""
+    tput setaf 3;
+    python3 manage.py collectstatic
+}
+
+##sqlMigrate
+sqlMigrate() {
+  echo ""
+  tput setaf 3;
+  echo -n " Name of app && n° of migration/migration name : "
+  read namenum
+  python3 manage.py sqlmigrate $namenum
+}
+
+## needed to run menu func
+menu
+
