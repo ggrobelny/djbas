@@ -104,7 +104,7 @@ runserver() {
 makeMigrations() {
     echo ""
     tput setaf 3;
-    echo -n " Optional commands or press space: "
+    echo -n " Optional commands or press enter: "
     read command
     python3 manage.py makemigrations $command
 
@@ -114,7 +114,7 @@ makeMigrations() {
 migrate() {
     echo ""
     tput setaf 3;
-    echo -n " Optional commands or press space: "
+    echo -n " Optional commands or press enter: "
     read command
     python3 manage.py migrate $command
 
